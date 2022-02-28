@@ -1,0 +1,947 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux常用命令 | Mr.Cui的Blog</title><meta name="author" content="Mr.Cui"><meta name="copyright" content="Mr.Cui"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Linux常用命令lsattr命令Linux lsattr命令用于显示文件属性。 用chattr执行改变文件或目录的属性，可执行lsattr指令查询其属性。 语法1lsattr [-adlRvV][文件或目录...]  参数：  -a 　显示所有文件和目录，包括以”.”为名称开头字符的额外内建，现行目录”.”与上层目录”..”。 -d 　显示，目录名称，而非其内容。 -l 　此参数目前没有任何作用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux常用命令">
+<meta property="og:url" content="http://example.com/2021/10/19/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="Mr.Cui的Blog">
+<meta property="og:description" content="Linux常用命令lsattr命令Linux lsattr命令用于显示文件属性。 用chattr执行改变文件或目录的属性，可执行lsattr指令查询其属性。 语法1lsattr [-adlRvV][文件或目录...]  参数：  -a 　显示所有文件和目录，包括以”.”为名称开头字符的额外内建，现行目录”.”与上层目录”..”。 -d 　显示，目录名称，而非其内容。 -l 　此参数目前没有任何作用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-10-19T13:09:51.000Z">
+<meta property="article:modified_time" content="2021-10-19T16:02:41.690Z">
+<meta property="article:author" content="Mr.Cui">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/10/19/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux常用命令',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-10-20 00:02:41'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Mr.Cui的Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/algolia.svg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/upadte/"><i class="fa-fw fa fa-bell"></i><span> 日志</span></a></div><div class="menus_item"><a class="site-page" href="/myself/"><i class="fa-fw fa fa-id-card"></i><span> Myself</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-list"></i><span> 菜单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%85%B3%E4%BA%8E"><i class="fa-fw /about/"></i><span> 0</span></a></li><li><a class="site-page child" href="/butterfly%E4%B8%BB%E9%A2%98"><i class="fa-fw https://github.com/jerryc127/hexo-theme-butterfly/"></i><span> 1</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Mr.Cui的Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/upadte/"><i class="fa-fw fa fa-bell"></i><span> 日志</span></a></div><div class="menus_item"><a class="site-page" href="/myself/"><i class="fa-fw fa fa-id-card"></i><span> Myself</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-list"></i><span> 菜单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E5%85%B3%E4%BA%8E"><i class="fa-fw /about/"></i><span> 0</span></a></li><li><a class="site-page child" href="/butterfly%E4%B8%BB%E9%A2%98"><i class="fa-fw https://github.com/jerryc127/hexo-theme-butterfly/"></i><span> 1</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux常用命令</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-10-19T13:09:51.000Z" title="发表于 2021-10-19 21:09:51">2021-10-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-10-19T16:02:41.690Z" title="更新于 2021-10-20 00:02:41">2021-10-20</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Linux常用命令"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Linux常用命令"><a href="#Linux常用命令" class="headerlink" title="Linux常用命令"></a>Linux常用命令</h1><h2 id="lsattr命令"><a href="#lsattr命令" class="headerlink" title="lsattr命令"></a>lsattr命令</h2><p>Linux lsattr命令用于显示文件属性。</p>
+<p>用chattr执行改变文件或目录的属性，可执行lsattr指令查询其属性。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsattr [-adlRvV][文件或目录...]</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数</strong>：</p>
+<ul>
+<li>-a 　显示所有文件和目录，包括以”.”为名称开头字符的额外内建，现行目录”.”与上层目录”..”。</li>
+<li>-d 　显示，目录名称，而非其内容。</li>
+<li>-l 　此参数目前没有任何作用。</li>
+<li>-R 　递归处理，将指定目录下的所有文件及子目录一并处理。</li>
+<li>-v 　显示文件或目录版本。</li>
+<li>-V 　显示版本信息。</li>
+</ul>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>1、用chattr命令防止系统中某个关键文件被修改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chattr +i /etc/resolv.conf</span><br></pre></td></tr></table></figure>
+
+<p>然后用mv /etc/resolv.conf等命令操作于该文件，都是得到Operation not permitted 的结果。</p>
+<p>vim编辑该文件时会提示W10: Warning: Changing a readonly file错误。要想修改此文件就要把i属性去掉：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chattr -i /etc/resolv.conf</span><br></pre></td></tr></table></figure>
+
+<p>使用 lsattr 命令来显示文件属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># lsattr /etc/resolv.conf</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">----i-------- /etc/resolv.conf</span><br></pre></td></tr></table></figure>
+
+<p>2、让某个文件只能往里面追加数据，但不能删除，适用于各种日志文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chattr +a /var/log/messages</span><br></pre></td></tr></table></figure>
+
+<h2 id="chattr命令"><a href="#chattr命令" class="headerlink" title="chattr命令"></a>chattr命令</h2><p>Linux chattr命令用于改变文件属性。</p>
+<p>这项指令可改变存放在ext2文件系统上的文件或目录属性，这些属性共有以下8种模式：</p>
+<ol>
+<li>a：让文件或目录仅供附加用途。</li>
+<li>b：不更新文件或目录的最后存取时间。</li>
+<li>c：将文件或目录压缩后存放。</li>
+<li>d：将文件或目录排除在倾倒操作之外。</li>
+<li>i：不得任意更动文件或目录。</li>
+<li>s：保密性删除文件或目录。</li>
+<li>S：即时更新文件或目录。</li>
+<li>u：预防意外删除。</li>
+</ol>
+<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chattr [-RV][-v&lt;版本编号&gt;][+/-/=&lt;属性&gt;][文件或目录...]</span><br></pre></td></tr></table></figure>
+
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>　　-R 递归处理，将指定目录下的所有文件及子目录一并处理。</p>
+<p>　　-v&lt;版本编号&gt; 设置文件或目录版本。</p>
+<p>　　-V 显示指令执行过程。</p>
+<p>　　+&lt;属性&gt; 开启文件或目录的该项属性。</p>
+<p>　　-&lt;属性&gt; 关闭文件或目录的该项属性。</p>
+<p>　　=&lt;属性&gt; 指定文件或目录的该项属性。</p>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><p>用chattr命令防止系统中某个关键文件被修改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chattr +i /etc/resolv.conf</span><br><span class="line">lsattr /etc/resolv.conf</span><br></pre></td></tr></table></figure>
+
+<p>会显示如下属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">----i-------- /etc/resolv.conf</span><br></pre></td></tr></table></figure>
+
+<p>让某个文件只能往里面追加数据，但不能删除，适用于各种日志文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chattr +a /var/log/messages</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装ifconfig"><a href="#安装ifconfig" class="headerlink" title="安装ifconfig"></a>安装ifconfig</h2><ul>
+<li>yum install net-tools.x86_64 -y</li>
+</ul>
+<h2 id="linux一行命令查找进程并杀掉进程"><a href="#linux一行命令查找进程并杀掉进程" class="headerlink" title="linux一行命令查找进程并杀掉进程"></a>linux一行命令查找进程并杀掉进程</h2><ul>
+<li><p>pkill -9 redis</p>
+<ul>
+<li>说明：”-9” 即发送的信号是9，pkill与kill在这点的差别是：pkill无须 “ｓ”，终止信号等级直接跟在 “-“ 后面。之前我一直以为是 “-s 9”，结果每次运行都无法终止进程。</li>
+<li>将reids改为要杀死的进程</li>
+</ul>
+</li>
+<li><p>ps -ef | grep redis | awk ‘{print $2}’ | xargs kill -9</p>
+<ul>
+<li> 将reids改为要杀死的进程</li>
+</ul>
+</li>
+<li><p>jps -v  | grep “myJarToKill.jar” | awk ‘{print $1}’|xargs kill -9</p>
+<ul>
+<li> 杀死指定jar程序</li>
+</ul>
+</li>
+</ul>
+<h2 id="查询公网ip"><a href="#查询公网ip" class="headerlink" title="查询公网ip"></a>查询公网ip</h2><ul>
+<li>curl cip.cc </li>
+<li>curl ifconfig.me</li>
+</ul>
+<h2 id="添加用户和群组"><a href="#添加用户和群组" class="headerlink" title="添加用户和群组"></a>添加用户和群组</h2><ul>
+<li>创建了名为keyten的账号和群组<ul>
+<li>groupadd keyten&amp;&amp; useradd -d /home/keyten -g keyten -m keyten</li>
+<li>groupadd es &amp;&amp; useradd -d /home/es -g es -m es</li>
+</ul>
+</li>
+</ul>
+<h2 id="修改用户群组"><a href="#修改用户群组" class="headerlink" title="修改用户群组"></a>修改用户群组</h2><h3 id="查看用户组"><a href="#查看用户组" class="headerlink" title="查看用户组"></a>查看用户组</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">groups # 查看当前登录用户的组内成员</span><br><span class="line">groups gliethttp # 查看gliethttp用户所在的组,以及组内成员</span><br><span class="line">whoami # 查看当前登录用户名</span><br><span class="line"></span><br><span class="line">/etc/group #文件包含所有组</span><br><span class="line">/etc/shadow和/etc/passwd #系统存在的所有用户名</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改用户组"><a href="#修改用户组" class="headerlink" title="修改用户组"></a>修改用户组</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">usermod -g group loginname</span><br><span class="line">强行设置某个用户所在组</span><br><span class="line">usermod -G groups loginname</span><br><span class="line">把某个用户改为 group(s)</span><br><span class="line">usermod -a -G groups loginname</span><br><span class="line">把用户添加进入某个组(s）</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何让普通用户获得ROOT权限"><a href="#如何让普通用户获得ROOT权限" class="headerlink" title="如何让普通用户获得ROOT权限"></a>如何让普通用户获得ROOT权限</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41940950/article/details/81044594">https://blog.csdn.net/qq_41940950/article/details/81044594</a></li>
+<li>vi /etc/sudoers</li>
+</ul>
+<h2 id="linux查看历史操作记录并且显示执行时间"><a href="#linux查看历史操作记录并且显示执行时间" class="headerlink" title="linux查看历史操作记录并且显示执行时间"></a>linux查看历史操作记录并且显示执行时间</h2><ul>
+<li><p>vi /etc/profile</p>
+<ul>
+<li>在最后增加</li>
+<li>export HISTTIMEFORMAT=”%F %T “ </li>
+</ul>
+</li>
+<li><p>解释</p>
+<ul>
+<li><p>%T ： 替换为时间（ %H:%M:%S ）。</p>
+<p>%F ： 等同于 %Y-%m-%d （ISO 8601:2000 标准日期格式）。</p>
+</li>
+</ul>
+</li>
+<li><p>使其生效</p>
+<ul>
+<li>source /etc/profile</li>
+</ul>
+</li>
+</ul>
+<h2 id="修改-固定ip-ifcfg-em1-是网卡名"><a href="#修改-固定ip-ifcfg-em1-是网卡名" class="headerlink" title="修改/固定ip  ifcfg-em1  是网卡名"></a>修改/固定ip  ifcfg-em1  是网卡名</h2><ul>
+<li>vi /etc/sysconfig/network-scripts/ifcfg-em2</li>
+</ul>
+<h2 id="修改hostname"><a href="#修改hostname" class="headerlink" title="修改hostname"></a>修改hostname</h2><ul>
+<li>vim /etc/sysconfig/network<ul>
+<li>HOSTNAME=name.example</li>
+</ul>
+</li>
+<li>或者执行命令<ul>
+<li>hostnamectl set-hostname host.example.com</li>
+</ul>
+</li>
+<li>修改完重启网络<ul>
+<li>systemctl restart network</li>
+</ul>
+</li>
+</ul>
+<h3 id="如果没有ifconfig命令"><a href="#如果没有ifconfig命令" class="headerlink" title="如果没有ifconfig命令"></a>如果没有ifconfig命令</h3><ul>
+<li>yum -y install net-tools</li>
+</ul>
+<h2 id="临时修改语言为中文"><a href="#临时修改语言为中文" class="headerlink" title="临时修改语言为中文"></a>临时修改语言为中文</h2><ul>
+<li>export LANG=zh_CN.UTF-8</li>
+</ul>
+<h2 id="修改当前用户启动脚本（类是快捷键）"><a href="#修改当前用户启动脚本（类是快捷键）" class="headerlink" title="修改当前用户启动脚本（类是快捷键）"></a>修改当前用户启动脚本（类是快捷键）</h2><ul>
+<li>修改.bashrc<ul>
+<li>vi ~/.bashrc</li>
+</ul>
+</li>
+<li>刷新.bashrc<ul>
+<li>source ~/.bashrc</li>
+</ul>
+</li>
+</ul>
+<h2 id="查看端口被占用"><a href="#查看端口被占用" class="headerlink" title="查看端口被占用"></a>查看端口被占用</h2><ul>
+<li>netstat -ntulp | grep 3306    <ul>
+<li>3306改为你想查的端口号</li>
+</ul>
+</li>
+</ul>
+<h2 id="去除注释查看"><a href="#去除注释查看" class="headerlink" title="去除注释查看"></a>去除注释查看</h2><ul>
+<li>grep -Evn “^$|^[#;]” + 文件路径    eg:    grep -Ev “^$|^[#;]”  /usr/config.json]    <ul>
+<li>命令解释</li>
+<li>-E 正则匹配，-v 结果取反，打印不匹配的行，-n 显示行号 ^$是空白行</li>
+</ul>
+</li>
+</ul>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><h3 id="重启网卡-网络方法"><a href="#重启网卡-网络方法" class="headerlink" title="重启网卡/网络方法"></a>重启网卡/网络方法</h3><ul>
+<li>nmcli c reload +网卡名</li>
+<li>例如：nmcli c reload ens160</li>
+</ul>
+<h2 id="sync-远程同步工具"><a href="#sync-远程同步工具" class="headerlink" title="sync 远程同步工具"></a>sync 远程同步工具</h2><ul>
+<li>rsync主要用于备份和镜像。具有速度快、避免复制相同内容和支持符号链接的优点。</li>
+<li>rsync和scp区别：用rsync做文件的复制要比scp的速度快，rsync只对差异文件做更新。scp是把所有文件都复制过去。</li>
+</ul>
+<h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><p>rsync    -av       $pdir/$fname              $user@hadoop$host:$pdir/$fname</p>
+<p>命令   选项参数   要拷贝的文件路径/名称    目的用户@主机:目的路径/名称</p>
+<p>选项    功能<br>-a    归档拷贝<br>-v    显示复制过程</p>
+<h3 id="选项说明和示例"><a href="#选项说明和示例" class="headerlink" title="选项说明和示例"></a>选项说明和示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">-v：显示rsync过程中详细信息。可以使用&quot;-vvvv&quot;获取更详细信息。</span><br><span class="line">-P：显示文件传输的进度信息。(实际上&quot;-P&quot;=&quot;--partial --progress&quot;，其中的&quot;--progress&quot;才是显示进度信息的)。</span><br><span class="line">-n --dry-run  ：仅测试传输，而不实际传输。常和&quot;-vvvv&quot;配合使用来查看rsync是如何工作的。</span><br><span class="line">-a --archive  ：归档模式，表示递归传输并保持文件属性。等同于&quot;-rtopgDl&quot;。</span><br><span class="line">-r --recursive：递归到目录中去。</span><br><span class="line">-t --times：保持mtime属性。强烈建议任何时候都加上&quot;-t&quot;，否则目标文件mtime会设置为系统时间，导致下次更新</span><br><span class="line">          ：检查出mtime不同从而导致增量传输无效。</span><br><span class="line">-o --owner：保持owner属性(属主)。</span><br><span class="line">-g --group：保持group属性(属组)。</span><br><span class="line">-p --perms：保持perms属性(权限，不包括特殊权限)。</span><br><span class="line">-D        ：是&quot;--device --specials&quot;选项的组合，即也拷贝设备文件和特殊文件。</span><br><span class="line">-l --links：如果文件是软链接文件，则拷贝软链接本身而非软链接所指向的对象。</span><br><span class="line">-z        ：传输时进行压缩提高效率。</span><br><span class="line">-R --relative：使用相对路径。意味着将命令行中指定的全路径而非路径最尾部的文件名发送给服务端，包括它们的属性。用法见下文示例。</span><br><span class="line">--size-only ：默认算法是检查文件大小和mtime不同的文件，使用此选项将只检查文件大小。</span><br><span class="line">-u --update ：仅在源mtime比目标已存在文件的mtime新时才拷贝。注意，该选项是接收端判断的，不会影响删除行为。</span><br><span class="line">-d --dirs   ：以不递归的方式拷贝目录本身。默认递归时，如果源为&quot;dir1/file1&quot;，则不会拷贝dir1目录，使用该选项将拷贝dir1但不拷贝file1。</span><br><span class="line">--max-size  ：限制rsync传输的最大文件大小。可以使用单位后缀，还可以是一个小数值(例如：&quot;--max-size=1.5m&quot;)</span><br><span class="line">--min-size  ：限制rsync传输的最小文件大小。这可以用于禁止传输小文件或那些垃圾文件。</span><br><span class="line">--exclude   ：指定排除规则来排除不需要传输的文件。</span><br><span class="line">--delete    ：以SRC为主，对DEST进行同步。多则删之，少则补之。注意&quot;--delete&quot;是在接收端执行的，所以它是在</span><br><span class="line">            ：exclude/include规则生效之后才执行的。</span><br><span class="line">-b --backup ：对目标上已存在的文件做一个备份，备份的文件名后默认使用&quot;~&quot;做后缀。</span><br><span class="line">--backup-dir：指定备份文件的保存路径。不指定时默认和待备份文件保存在同一目录下。</span><br><span class="line">-e          ：指定所要使用的远程shell程序，默认为ssh。</span><br><span class="line">--port      ：连接daemon时使用的端口号，默认为873端口。</span><br><span class="line">--password-file：daemon模式时的密码文件，可以从中读取密码实现非交互式。注意，这不是远程shell认证的密码，而是rsync模块认证的密码。</span><br><span class="line">-W --whole-file：rsync将不再使用增量传输，而是全量传输。在网络带宽高于磁盘带宽时，该选项比增量传输更高效。</span><br><span class="line">--existing  ：要求只更新目标端已存在的文件，目标端还不存在的文件不传输。注意，使用相对路径时如果上层目录不存在也不会传输。</span><br><span class="line">--ignore-existing：要求只更新目标端不存在的文件。和&quot;--existing&quot;结合使用有特殊功能，见下文示例。</span><br><span class="line">--remove-source-files：要求删除源端已经成功传输的文件。</span><br></pre></td></tr></table></figure>
+
+<h2 id="密钥"><a href="#密钥" class="headerlink" title="密钥"></a>密钥</h2><h3 id="更改-ssh文件夹持有人"><a href="#更改-ssh文件夹持有人" class="headerlink" title="更改.ssh文件夹持有人"></a>更改.ssh文件夹持有人</h3><ul>
+<li>chown keyten:keyten .ssh</li>
+</ul>
+<h3 id="更改-ssh文件夹权限"><a href="#更改-ssh文件夹权限" class="headerlink" title="更改.ssh文件夹权限"></a>更改.ssh文件夹权限</h3><ul>
+<li>chmod 700 .ssh</li>
+</ul>
+<h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><ul>
+<li>ssh-keygen -t rsa</li>
+</ul>
+<h3 id="更改持有人"><a href="#更改持有人" class="headerlink" title="更改持有人"></a>更改持有人</h3><ul>
+<li>chown keyten:keyten authorized_keys </li>
+</ul>
+<h3 id="更改权限"><a href="#更改权限" class="headerlink" title="更改权限"></a>更改权限</h3><ul>
+<li>chmod 600 authorized_keys</li>
+</ul>
+<h3 id="拷贝密钥"><a href="#拷贝密钥" class="headerlink" title="拷贝密钥"></a>拷贝密钥</h3><ul>
+<li>ssh-copy-id IP或者hostname  <ul>
+<li>ssh-copy-id hadoop101</li>
+</ul>
+</li>
+</ul>
+<h2 id="SSH登录"><a href="#SSH登录" class="headerlink" title="SSH登录"></a>SSH登录</h2><ul>
+<li>ssh -p 22 <a href="mailto:&#x72;&#111;&#x6f;&#x74;&#64;&#49;&#x39;&#x32;&#46;&#49;&#x36;&#56;&#46;&#50;&#x35;&#46;&#x31;&#51;&#55;">&#x72;&#111;&#x6f;&#x74;&#64;&#49;&#x39;&#x32;&#46;&#49;&#x36;&#56;&#46;&#50;&#x35;&#46;&#x31;&#51;&#55;</a></li>
+</ul>
+<h2 id="修改DNS"><a href="#修改DNS" class="headerlink" title="修改DNS"></a>修改DNS</h2><ul>
+<li>vi /etc/resolv.conf<ul>
+<li>添加一下内容，只需添加nameserver那一行，nameserver为DNS地址<br>search local<br>nameserver 8.8.8.8<br>nameserver 114.114.114.114</li>
+</ul>
+</li>
+</ul>
+<h2 id="修改挂载点"><a href="#修改挂载点" class="headerlink" title="修改挂载点"></a>修改挂载点</h2><h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><ul>
+<li>df -h</li>
+</ul>
+<h3 id="创建文件夹（挂载位置）"><a href="#创建文件夹（挂载位置）" class="headerlink" title="创建文件夹（挂载位置）"></a>创建文件夹（挂载位置）</h3><ul>
+<li>mkdir /data</li>
+</ul>
+<h3 id="卸载之前的挂载点"><a href="#卸载之前的挂载点" class="headerlink" title="卸载之前的挂载点"></a>卸载之前的挂载点</h3><ul>
+<li>umount /date<ul>
+<li>date是需要卸载的挂载点</li>
+</ul>
+</li>
+</ul>
+<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><ul>
+<li>vi /etc/fstab </li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">此行</span><br><span class="line">UUID=590772f4-c40e-424d-84af-06550afebc10 /date                   xfs     defaults        0 0</span><br><span class="line">修改为</span><br><span class="line">UUID=590772f4-c40e-424d-84af-06550afebc10 /data                   xfs     defaults        0 0</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="防火墙相关"><a href="#防火墙相关" class="headerlink" title="防火墙相关"></a>防火墙相关</h1><h2 id="firewalld防火墙"><a href="#firewalld防火墙" class="headerlink" title="firewalld防火墙"></a>firewalld防火墙</h2><h3 id="查看已经开放的端口"><a href="#查看已经开放的端口" class="headerlink" title="查看已经开放的端口"></a>查看已经开放的端口</h3><ul>
+<li>firewall-cmd –list-ports</li>
+</ul>
+<h3 id="查看所有打开的端口："><a href="#查看所有打开的端口：" class="headerlink" title="查看所有打开的端口："></a>查看所有打开的端口：</h3><ul>
+<li>firewall-cmd –zone=public –list-ports</li>
+</ul>
+<h3 id="开启指定端口，开放端口后要重启防火墙才能生效"><a href="#开启指定端口，开放端口后要重启防火墙才能生效" class="headerlink" title="开启指定端口，开放端口后要重启防火墙才能生效"></a>开启指定端口，开放端口后要重启防火墙才能生效</h3><ul>
+<li>sudo firewall-cmd –zone=public –add-port=8888/tcp –permanent </li>
+<li>sudo firewall-cmd –query-port=8888/udp<ul>
+<li>8888 为需要开启的端口号</li>
+<li>–permanent表示永久生效，重启不会丢失配置。</li>
+</ul>
+</li>
+</ul>
+<h3 id="关闭指定端口"><a href="#关闭指定端口" class="headerlink" title="关闭指定端口"></a>关闭指定端口</h3><ul>
+<li>sudo firewall-cmd –remove-port=8888/udp –permanent</li>
+<li><strong>firewall-cmd –zone=public –remove-port=5672/tcp –permanent</strong> </li>
+</ul>
+<h3 id="开启-关闭-重启防火墙"><a href="#开启-关闭-重启防火墙" class="headerlink" title="开启/关闭/重启防火墙"></a>开启/关闭/重启防火墙</h3><ul>
+<li>firewall-cmd –reload</li>
+<li>sudo systemctl stop firewalld</li>
+<li>sudo systemctl restart firewalld</li>
+<li>sudo systemctl status firewalld</li>
+</ul>
+<h2 id="iptables防火墙"><a href="#iptables防火墙" class="headerlink" title="iptables防火墙"></a>iptables防火墙</h2><h3 id="通过命令输入地址和端口详细信息"><a href="#通过命令输入地址和端口详细信息" class="headerlink" title="通过命令输入地址和端口详细信息"></a>通过命令输入地址和端口详细信息</h3><ul>
+<li>iptables -nvL</li>
+</ul>
+<h2 id="CentOS-8使用iptables"><a href="#CentOS-8使用iptables" class="headerlink" title="CentOS 8使用iptables"></a>CentOS 8使用iptables</h2><h3 id="查看端口状态"><a href="#查看端口状态" class="headerlink" title="查看端口状态"></a>查看端口状态</h3><ul>
+<li>iptables -nvL</li>
+</ul>
+<h3 id="开启、关闭、重启、查看状态"><a href="#开启、关闭、重启、查看状态" class="headerlink" title="开启、关闭、重启、查看状态"></a>开启、关闭、重启、查看状态</h3><ul>
+<li>service iptables start</li>
+<li>service iptables stop</li>
+<li>service iptables restart</li>
+<li>service iptables status</li>
+</ul>
+<h3 id="开放指定端口"><a href="#开放指定端口" class="headerlink" title="开放指定端口"></a>开放指定端口</h3><ul>
+<li>iptables -I INPUT -p tcp –dport 8080 -j ACCEPT  <ul>
+<li> linux iptables 开放8080端口命令</li>
+</ul>
+</li>
+</ul>
+<h3 id="CentOS6-开放指定端口"><a href="#CentOS6-开放指定端口" class="headerlink" title="CentOS6 开放指定端口"></a>CentOS6 开放指定端口</h3><ul>
+<li>/sbin/iptables -I INPUT -p tcp –dport 10050 -j ACCEPT</li>
+<li>/etc/rc.d/init.d/iptables save</li>
+<li>/etc/rc.d/init.d/iptables restart</li>
+<li>/etc/init.d/iptables status</li>
+</ul>
+<h3 id="添加防火墙转发规则"><a href="#添加防火墙转发规则" class="headerlink" title="添加防火墙转发规则"></a>添加防火墙转发规则</h3><ul>
+<li>/sbin/iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o tun0 -j SNAT –to-source 192.119.68.82</li>
+</ul>
+<h3 id="删除防火墙转发规则"><a href="#删除防火墙转发规则" class="headerlink" title="删除防火墙转发规则"></a>删除防火墙转发规则</h3><ul>
+<li>/sbin/iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -o tun0 -j SNAT –to-source 192.119.68.82</li>
+</ul>
+<h3 id="添加防火墙转发规则-1"><a href="#添加防火墙转发规则-1" class="headerlink" title="添加防火墙转发规则"></a>添加防火墙转发规则</h3><ul>
+<li>/sbin/iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j SNAT –to-source 192.119.68.82</li>
+</ul>
+<h3 id="删除防火墙转发规则-1"><a href="#删除防火墙转发规则-1" class="headerlink" title="删除防火墙转发规则"></a>删除防火墙转发规则</h3><ul>
+<li>/sbin/iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -j SNAT –to-source 192.119.68.82</li>
+</ul>
+<h1 id="查看Linux服务器各种参数"><a href="#查看Linux服务器各种参数" class="headerlink" title="查看Linux服务器各种参数"></a>查看Linux服务器各种参数</h1><h2 id="查看CPU"><a href="#查看CPU" class="headerlink" title="查看CPU"></a>查看CPU</h2><ul>
+<li>more /proc/cpuinfo</li>
+</ul>
+<h2 id="查看物理cpu个数"><a href="#查看物理cpu个数" class="headerlink" title="查看物理cpu个数"></a>查看物理cpu个数</h2><ul>
+<li>grep ‘physical id’ /proc/cpuinfo | sort -u<ul>
+<li>2</li>
+</ul>
+</li>
+</ul>
+<h2 id="查看核心数量"><a href="#查看核心数量" class="headerlink" title="查看核心数量"></a>查看核心数量</h2><ul>
+<li>grep ‘core id’ /proc/cpuinfo | sort -u | wc -l<ul>
+<li>6</li>
+</ul>
+</li>
+</ul>
+<h2 id="查看线程数"><a href="#查看线程数" class="headerlink" title="查看线程数"></a>查看线程数</h2><ul>
+<li>grep ‘processor’ /proc/cpuinfo | sort -u | wc -l<ul>
+<li>12</li>
+</ul>
+</li>
+</ul>
+<h3 id="每个cpu是几核（假设cpu配置相同）"><a href="#每个cpu是几核（假设cpu配置相同）" class="headerlink" title="每个cpu是几核（假设cpu配置相同）"></a>每个cpu是几核（假设cpu配置相同）</h3><ul>
+<li>more /proc/cpuinfo |grep “physical id”|grep “0”|wc -l</li>
+<li>cat /proc/cpuinfo | grep processor</li>
+</ul>
+<h3 id="查看物理CPU的个数"><a href="#查看物理CPU的个数" class="headerlink" title="查看物理CPU的个数"></a>查看物理CPU的个数</h3><ul>
+<li>cat /proc/cpuinfo |grep “physical id”|sort |uniq|wc -l</li>
+</ul>
+<h3 id="每个物理CPU中Core的个数"><a href="#每个物理CPU中Core的个数" class="headerlink" title="每个物理CPU中Core的个数"></a>每个物理CPU中Core的个数</h3><ul>
+<li>cat /proc/cpuinfo | grep “cpu cores” | wc -l<ul>
+<li>8</li>
+</ul>
+</li>
+</ul>
+<h3 id="每个物理CPU中逻辑CPU-可能是core-threads或both-的个数"><a href="#每个物理CPU中逻辑CPU-可能是core-threads或both-的个数" class="headerlink" title="每个物理CPU中逻辑CPU(可能是core, threads或both)的个数"></a>每个物理CPU中逻辑CPU(可能是core, threads或both)的个数</h3><ul>
+<li>cat /proc/cpuinfo | grep “siblings”</li>
+</ul>
+<h3 id="查看逻辑CPU的个数"><a href="#查看逻辑CPU的个数" class="headerlink" title="查看逻辑CPU的个数"></a>查看逻辑CPU的个数</h3><ul>
+<li>cat /proc/cpuinfo |grep “processor”|wc -l</li>
+<li>cat /proc/cpuinfo | grep processor<ul>
+<li>8</li>
+</ul>
+</li>
+</ul>
+<h3 id="查看CPU是几核"><a href="#查看CPU是几核" class="headerlink" title="查看CPU是几核"></a>查看CPU是几核</h3><ul>
+<li>cat /proc/cpuinfo |grep “cores”|uniq</li>
+</ul>
+<h3 id="查看CPU的主频"><a href="#查看CPU的主频" class="headerlink" title="查看CPU的主频"></a>查看CPU的主频</h3><ul>
+<li>cat /proc/cpuinfo |grep MHz|uniq</li>
+</ul>
+<h3 id="查看cpu具体型号"><a href="#查看cpu具体型号" class="headerlink" title="查看cpu具体型号"></a>查看cpu具体型号</h3><ul>
+<li><p>cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</p>
+<ul>
+<li> 8  Intel(R) Xeon(R) CPU            E5410   @ 2.33GHz</li>
+<li> 看到有8个逻辑CPU, 也知道了CPU型号</li>
+</ul>
+</li>
+<li><p>cat /proc/cpuinfo | grep physical | uniq -c</p>
+<ul>
+<li>```shell<br>4 physical id      : 04 physical id      : 1<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  - 说明实际上是两颗4核的CPU</span><br><span class="line"></span><br><span class="line">## 区别32位和64位系统</span><br><span class="line"></span><br><span class="line">- getconf LONG_BIT</span><br><span class="line">  - 32 说明当前CPU运行在32bit模式下, 但不代表CPU不支持64bit</span><br><span class="line">  - 64说明位64位</span><br><span class="line"></span><br><span class="line">## 查看是否支持64bit计算</span><br><span class="line"></span><br><span class="line">- cat /proc/cpuinfo | grep flags | grep &#x27; lm &#x27; | wc -l</span><br><span class="line">  - 8</span><br><span class="line">  - 结果大于0, 说明支持64bit计算. lm指long mode, 支持lm则是64bit</span><br><span class="line"></span><br><span class="line">## 查看系统内核信息</span><br><span class="line"></span><br><span class="line">-  uname -a</span><br><span class="line"></span><br><span class="line">## 区分CentOS系统和Ubuntu系统</span><br><span class="line"></span><br><span class="line">### radhat或centos</span><br><span class="line"></span><br><span class="line">- cat /etc/redhat-release</span><br><span class="line"></span><br><span class="line">### ubuntu存在</span><br><span class="line"></span><br><span class="line">-  **cat etc/lsb-release** </span><br><span class="line"></span><br><span class="line">### 查看安装指令</span><br><span class="line"></span><br><span class="line">#### 有yum的就是Centos【**yum -help**】</span><br><span class="line"></span><br><span class="line">- yum -help</span><br><span class="line"></span><br><span class="line">#### 有apt-get的就是Ubuntu 【**apt-get -help**】</span><br><span class="line"></span><br><span class="line">- apt-get -help</span><br><span class="line"></span><br><span class="line">### Red Hat（CentOS系统）</span><br><span class="line"></span><br><span class="line">- at /etc/issue | grep Linux</span><br><span class="line"></span><br><span class="line"># linux服务器修改时间为北京时间</span><br><span class="line"></span><br><span class="line">- https://blog.csdn.net/u010316188/article/details/79503376</span><br><span class="line"></span><br><span class="line">## 删除本地的时间文件，加入上海时区</span><br><span class="line"></span><br><span class="line">- rm -rf /etc/localtime</span><br><span class="line"></span><br><span class="line">## 重新链接时区</span><br><span class="line"></span><br><span class="line">- ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"></span><br><span class="line">## 同步下阿里的时间</span><br><span class="line"></span><br><span class="line">- /usr/sbin/ntpdate ntp1.aliyun.com </span><br><span class="line"></span><br><span class="line"># 常见问题</span><br><span class="line"></span><br><span class="line">## CentOS /bin/bash^M: bad interpreter解决方法</span><br><span class="line"></span><br><span class="line">- 如果这个脚本在Windows下编辑过，就有可能被转换成Windows下的dos文本格式了，这样的格式每一行的末尾都是以\r\n来标识，它的ASCII码分别是0x0D，0x0A。如果你将这个脚本文件直接放到Linux上执行就会报/bin/bash^M: bad interpreter错误提示</span><br><span class="line"></span><br><span class="line">- 查看是否是doc</span><br><span class="line"></span><br><span class="line">  - :set ff </span><br><span class="line"></span><br><span class="line">- 修改doc为unix</span><br><span class="line"></span><br><span class="line">  - :set ff=unix</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># linux下怎么卸载自带的JDK和安装想要的JDK</span><br><span class="line"></span><br><span class="line">## 查看</span><br><span class="line"></span><br><span class="line">- rpm -qa | grep java</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">java-1.8.0-openjdk-1.8.0.242.b08-1.el7.x86_64</span><br><span class="line">python-javapackages-3.4.1-11.el7.noarch</span><br><span class="line">java-1.8.0-openjdk-headless-1.8.0.242.b08-1.el7.x86_64</span><br><span class="line">tzdata-java-2019c-1.el7.noarch</span><br><span class="line">javapackages-tools-3.4.1-11.el7.noarch</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><ul>
+<li>rpm -e –nodeps java-1.8.0-openjdk-1.8.0.242.b08-1.el7.x86_64</li>
+<li>rpm -e –nodeps java-1.8.0-openjdk-headless-1.8.0.242.b08-1.el7.x86_64</li>
+</ul>
+<h1 id="Linux配置各种环境变量"><a href="#Linux配置各种环境变量" class="headerlink" title="Linux配置各种环境变量"></a>Linux配置各种环境变量</h1><h2 id="修改-etc-profile文件"><a href="#修改-etc-profile文件" class="headerlink" title="修改/etc/profile文件"></a>修改/etc/profile文件</h2><ul>
+<li>vi /etc/profile</li>
+</ul>
+<h2 id="修改完成后使其生效"><a href="#修改完成后使其生效" class="headerlink" title="修改完成后使其生效"></a>修改完成后使其生效</h2><ul>
+<li>. /etc/profile<ul>
+<li>或者  </li>
+</ul>
+</li>
+<li>source /etc/profile</li>
+</ul>
+<h2 id="注意对应路径就可以"><a href="#注意对应路径就可以" class="headerlink" title="注意对应路径就可以"></a>注意对应路径就可以</h2><h2 id="Java环境变量"><a href="#Java环境变量" class="headerlink" title="Java环境变量"></a>Java环境变量</h2><ul>
+<li><p>终端进入CentOS服务器，构建java目录</p>
+<ul>
+<li>mkdir /usr/java</li>
+</ul>
+</li>
+<li><p>上传tar包</p>
+</li>
+<li><p>解压tar包到 /usr/java</p>
+<ul>
+<li>tar -zxvf </li>
+</ul>
+</li>
+<li><p>编辑环境变量并添加，在末尾修改配置文件（ G 到末尾 O 在下一行输入），注意修改为自己的文件路径和java文件目录版本</p>
+<ul>
+<li>vi /etc/profile</li>
+<li>添加一下内容，注意自己的jdk版本和文件夹路径</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">Java 8</span></span><br><span class="line"></span><br><span class="line">JAVA_HOME=/usr/java/jdk1.8.0_211</span><br><span class="line">JRE_HOME=/usr/java/jdk1.8.0_211/jre</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib</span><br><span class="line">export JAVA_HOME JRE_HOME PATH CLASSPATH</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">Java 11</span></span><br><span class="line"></span><br><span class="line">JAVA_HOME=/data/java/jdk-11.0.8</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export JAVA_HOME  PATH CLASSPATH</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<ul>
+<li><p>使其配置生效</p>
+<ul>
+<li>source /etc/profile <ul>
+<li>或者</li>
+</ul>
+</li>
+<li>. /etc/profile </li>
+</ul>
+</li>
+<li><p>测试是否安装成功</p>
+<ul>
+<li>java -version</li>
+</ul>
+</li>
+</ul>
+<h2 id="Scala环境变量"><a href="#Scala环境变量" class="headerlink" title="Scala环境变量"></a>Scala环境变量</h2><ul>
+<li><p>终端进入CentOS服务器，构建java目录</p>
+<ul>
+<li>mkdir /usr/scala</li>
+</ul>
+</li>
+<li><p>上传tar包</p>
+</li>
+<li><p>解压tar包到 /usr/scala</p>
+<ul>
+<li>tar -zxvf  </li>
+</ul>
+</li>
+<li><p>编辑环境变量并添加,在末尾修改配置文件 G 到末尾 O 在下一行输入</p>
+<ul>
+<li>vi /etc/profile</li>
+<li>添加以下内容，注意自己的jdk版本和文件夹路径</li>
+</ul>
+<p>#scala</p>
+<p>export SCALA_HOME=/usr/scala/scala-2.13.1<br>export SCALA_CLASSPATH=$SCALA_HOME<br>export PATH=$PATH:$SCALA_HOME/bin</p>
+</li>
+<li><p>使其配置生效</p>
+<ul>
+<li>source /etc/profile 或者 . /etc/profile  使其生效</li>
+</ul>
+</li>
+<li><p>测试是否安装成功</p>
+<ul>
+<li>scala</li>
+</ul>
+</li>
+</ul>
+<h2 id="Spark环境变量"><a href="#Spark环境变量" class="headerlink" title="Spark环境变量"></a>Spark环境变量</h2><ul>
+<li><p>终端进入CentOS服务器，构建spark目录</p>
+<ul>
+<li>mkdir /usr/spark</li>
+</ul>
+</li>
+<li><p>上传tar包</p>
+</li>
+<li><p>解压tar包到 /usr/spark</p>
+<ul>
+<li>tar -zxvf </li>
+</ul>
+</li>
+<li><p>编辑环境变量并添加,在末尾修改配置文件 G 到末尾 O 在下一行输入</p>
+<ul>
+<li>vi /etc/profile</li>
+<li>在末尾添加以下内容，注意自己的jdk版本和文件夹路径</li>
+</ul>
+<p>#spark</p>
+<p>export SPARK_HOME=/usr/spark/spark-2.4.5-bin-hadoop2.7<br>export SPARK_CLASSPATH=$SPARK_HOME<br>export PATH=$PATH:$SPARK_HOME/bin</p>
+</li>
+<li><p>使配置生效</p>
+<ul>
+<li>source /etc/profile 或者 . /etc/profile  使其生效</li>
+</ul>
+</li>
+<li><p>启动Spark</p>
+<ul>
+<li>cd /usr/spark/spark-2.4.5-bin-hadoop2.7/bin</li>
+<li>./spark-shell</li>
+<li>或者 ./usr/spark/spark-2.4.5-bin-hadoop2.7/bin/spark-shell</li>
+</ul>
+</li>
+<li><p>搭建集群，修改配置文件（在安装目录下的conf文件夹中）</p>
+<ul>
+<li>将spark-env.sh.template修改为spark-env.sh，并编辑<ul>
+<li>cp spark-env.sh.template spark-env.sh</li>
+<li>vi spark-env.sh</li>
+<li>在spark-env.sh中添加(不同的slave中SPARK_LOCAL_IP需要对应的修改)：</li>
+</ul>
+</li>
+</ul>
+<p>SPARK_LOCAL_IP=43.239.121.67                             #本机ip或hostname<br>SPARK_MASTER_IP=43.239.121.67                             #master节点ip或hostname<br>#export HADOOP_CONF_DIR=/home/hadoop/hadoop-3.1.2   #hadoop的配置路径<br>#export YARN_CONF_DIR=/home/hadoop/hadoop-3.1.2     #yarn路径配置</p>
+<ul>
+<li><p>将slaves.template修改为slaves，并编辑</p>
+</li>
+<li><p>cp slaves.template slaves</p>
+<ul>
+<li>vi slaves</li>
+</ul>
+</li>
+<li><p>删除原有的localhost，添加：</p>
+<p>slave1<br>slave2<br>slave3</p>
+</li>
+<li><p>分发安装包和配置到其他节点，注意文件名称</p>
+<ul>
+<li>scp -r /usr/local/scala-2.13.0 root@slave1:/usr/local<br>scp -r spark-2.3.3-bin-hadoop2.7 hadoop@slave1:/home/hadoop/<br>scp -r spark-2.3.3-bin-hadoop2.7 hadoop@slave1:/home/hadoop/spark-2.3.3-bin-hadoop2.7</li>
+</ul>
+</li>
+<li><p>修改各节点中的在spark-env.sh中SPARK_LOCAL_IP选项</p>
+<p>SPARK_LOCAL_IP=slave1                              #本机ip或hostname<br>SPARK_MASTER_IP=master                             #master节点ip或hostname<br>export HADOOP_CONF_DIR=/home/hadoop/hadoop-3.1.2   #hadoop的配置路径<br>export YARN_CONF_DIR=/home/hadoop/hadoop-3.1.2     #yarn路径配置</p>
+</li>
+<li><p>启动</p>
+<ul>
+<li>cd /usr/spark/spark-2.4.5/sbin</li>
+<li>start-all.sh</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Hadoop环境变量"><a href="#Hadoop环境变量" class="headerlink" title="Hadoop环境变量"></a>Hadoop环境变量</h2><p>export HADOOP_HOME=/home/cuipu/hadoop-2.10.0<br>export PATH=$HADOOP_HOME/bin:$PATH</p>
+<h1 id="Linux-命令目录-名称-英文单词-缩写-助记"><a href="#Linux-命令目录-名称-英文单词-缩写-助记" class="headerlink" title="Linux 命令目录 名称 英文单词 缩写 助记"></a>Linux 命令目录 名称 英文单词 缩写 助记</h1><h2 id="0、项目名："><a href="#0、项目名：" class="headerlink" title="0、项目名："></a>0、项目名：</h2><p>Linux – LINUs’ uniX (开个玩笑不是这样的，别当真）</p>
+<p>GNU – Gnu is Not Unix</p>
+<h2 id="1、目录名："><a href="#1、目录名：" class="headerlink" title="1、目录名："></a>1、目录名：</h2><p>/boot：顾名思义</p>
+<p>/root ：同上</p>
+<p>/run：同上</p>
+<p>/home：同上</p>
+<p>/etc：ETCetera</p>
+<p>/bin：BINaries</p>
+<p>/dev：DEVices</p>
+<p>/lib：LIBraries</p>
+<p>/mnt：MouNT</p>
+<p>/proc：PROCesses</p>
+<p>/tmp：TeMPorary</p>
+<p>/var：VARiable</p>
+<p>/srv：SeRVices</p>
+<p>/opt：OPTional</p>
+<p>/sbin：Super BINaries</p>
+<p>or Superuser BINaries</p>
+<p>/sys：SYStem</p>
+<p>/usr：Unix System Resources</p>
+<p>or Unix Software Resources</p>
+<p>or Unix Shared Resources（这个很重要，很多人会认为这个是user）</p>
+<h2 id="2、常用命令："><a href="#2、常用命令：" class="headerlink" title="2、常用命令："></a>2、常用命令：</h2><p>2.1、文件及文件夹管理：</p>
+<p>ls – LiSt</p>
+<p>cd – Change Directory</p>
+<p>pwd – Print Working Directory</p>
+<p>cp – CoPy</p>
+<p>mv – MoVe</p>
+<p>rm – ReMove</p>
+<p>pushd – PUSH to Directory</p>
+<p>popd – POP from Directory</p>
+<p>mkdir – MaKe DIRectory</p>
+<p>rmdir – ReMove DIRectory</p>
+<p>cat – CATenate</p>
+<p>or conCATenate</p>
+<p>sed – Stream EDitor</p>
+<p>diff – DIFFerence</p>
+<p>wc – Word Count</p>
+<p>chmod – CHange MODe</p>
+<p>chown – CHange OWNer</p>
+<p>chgrp – CHange GRouP</p>
+<p>awk – Aho Weinberger and Kernighan</p>
+<p>gawk – Gnu AWK</p>
+<p>mawk – Minimal AWK</p>
+<p>grep – General Regular Expression Print</p>
+<p>ln – LiNk</p>
+<p>tar – TARball</p>
+<h3 id="2-2、硬件管理："><a href="#2-2、硬件管理：" class="headerlink" title="2.2、硬件管理："></a>2.2、硬件管理：</h3><p>df – Disk Free</p>
+<p>du – Disk Usage</p>
+<p>dd – Data Description（有说是Convert and Copy， 但是cc被用掉了，就用dd了）</p>
+<p>parted – PARTition EDitor</p>
+<p>fdisk – Format DISK</p>
+<p>lspci – LiSt Peripheral Component Interconnect</p>
+<p>lscpu – LiSt Central Process Unit</p>
+<p>lsusb – LiSt Universal Serial Bus</p>
+<p>lsblk – LiSt BLocK</p>
+<p>mdadm – Multiple Disk And Device Manager</p>
+<h4 id="2-2-1、lvm"><a href="#2-2-1、lvm" class="headerlink" title="2.2.1、lvm"></a>2.2.1、lvm</h4><p>lvm – Logical Volume Manager</p>
+<p>pvcreate – Physical Volume CREATE</p>
+<p>vgcreate – Volume Group CREATE</p>
+<p>lvcreate – Logical Volume CREATE</p>
+<p>pvdisplay – Physical Volume DISPLAY</p>
+<p>vgdisplay – Volume Group DISPLAY</p>
+<p>lvdisplay – Logical Volume DISPLAY</p>
+<p>pvresize – Physical Volume RESIZE</p>
+<p>vgresize – Volume Group RESIZE</p>
+<p>lvresize – Logical Volume RESIZE</p>
+<p>pvextend – Physical Volume EXTEND</p>
+<p>vgextend – Volume Group EXTEND</p>
+<p>lvextend – Logical Volume EXTEND</p>
+<p>pvremove – Physical Volume REMOVE</p>
+<p>vgremove – Volume Group REMOVE</p>
+<p>lvremove – Logical Volume REMOVE</p>
+<p>pvs – Physical Volume Status</p>
+<p>vgs – Volume Group Status</p>
+<p>lvs – Logical Volume Status</p>
+<h3 id="2-3、软件及软件包管理："><a href="#2-3、软件及软件包管理：" class="headerlink" title="2.3、软件及软件包管理："></a>2.3、软件及软件包管理：</h3><p>man – MANual</p>
+<p>apt – Advanced Packaging Tool</p>
+<p>dpkg – Debian PacKaGe</p>
+<p>yum – Yellow dog Updater, Modified</p>
+<p>rpm – RPM Package Manager</p>
+<p>or Redhat Package Manager</p>
+<h3 id="2-4、用户及用户组管理："><a href="#2-4、用户及用户组管理：" class="headerlink" title="2.4、用户及用户组管理："></a>2.4、用户及用户组管理：</h3><p>useradd – USER Add</p>
+<p>userdel – USER DELete</p>
+<p>usermod – USER MODify</p>
+<p>users – USER Status</p>
+<p>groupadd – GROUP ADD</p>
+<p>groupdel – GROUP DELete</p>
+<p>groupmod – GROUP MODify</p>
+<p>groupmems – GROUP MEMberS</p>
+<h3 id="2-5、系统管理："><a href="#2-5、系统管理：" class="headerlink" title="2.5、系统管理："></a>2.5、系统管理：</h3><p>depmod – DEPend MODule</p>
+<p>lsmod – LiSt MODule</p>
+<p>modprobe – MODule PROBE</p>
+<p>modinfo – MODule INFOrmation</p>
+<p>insmod – INSert MODule</p>
+<p>rmmod – ReMove MODule</p>
+<p>mkfs – MaKe FileSystem</p>
+<p>fsck – File System Consistency Check</p>
+<p>ps – Processes Status</p>
+<p>su – Substitute User</p>
+<p>bash – Bourne Again SHell</p>
+<p>dash – Debian Almquist SHell</p>
+<p>init – INITialization</p>
+<p>ssh – Secure SHell</p>
+<p>wine – Wine Is Not an Emulator</p>
+<p>exec – EXECute</p>
+<p>fstab – FileSystem TABle</p>
+<p>passwd – PASSWorD</p>
+<p>chpasswd – CHange PASSWorD</p>
+<p>pwconv – PassWord CONVert</p>
+<p>pwunconv – PassWord UNCONVert</p>
+<p>tty – TeleTYpe</p>
+<p>sudo – SuperUser DO</p>
+<p>grub – GRand Unified Bootloader</p>
+<p>tzselect – Time Zone SELECT</p>
+<p>sync – SYNChronize</p>
+<p>systemd – SYSTEM Daemon (里面有systemctl bootctl journalctl loginctl localectl timedatectl 等等，都是blablabla ConTroL）</p>
+<h3 id="2-6、编辑器："><a href="#2-6、编辑器：" class="headerlink" title="2.6、编辑器："></a>2.6、编辑器：</h3><p>ed – EDitor</p>
+<p>nano – Nano’s ANOther editor</p>
+<p>emacs – Editor MACroS（还有很多全称，就不罗列了，这个接受度比较广）</p>
+<p>vi – VIsual</p>
+<p>vim – Vi Improved</p>
+<h3 id="2-7、编译器："><a href="#2-7、编译器：" class="headerlink" title="2.7、编译器："></a>2.7、编译器：</h3><p>cc – C Compiler</p>
+<p>gcc – Gnu Compiler Collection（作为一个软件集被你下载下来编译安装的时候）</p>
+<p>gcc – Gnu C Compiler (作为一个软件被你调用来编译C程序的时候）</p>
+<p>g++ – Gnu c++ compiler</p>
+<p>gcj – Gnu Compiler for Java</p>
+<p>yacc – Yet Another Compiler Compiler</p>
+<p>guile – Gnu Ubiquitous Intelligent Language for Extensions</p>
+<p>gas – Gnu Assembler</p>
+<p>php – PHP：Hypertext Preprocessor</p>
+<p>ld – LoaD</p>
+<p>gdb – Gnu DeBug</p>
+<p>tcl – Tool Command Line</p>
+<h2 id="3、图形界面："><a href="#3、图形界面：" class="headerlink" title="3、图形界面："></a>3、图形界面：</h2><p>gnome – GNu Object Model Environment</p>
+<p>gdm – Gnome Display Manager</p>
+<p>gtk – Graphic user interface ToolKit</p>
+<p>qt – ………………Toolkit（不说Q了，用Q只是因为在开发者的Emacs中Q特别漂亮…………）</p>
+<p>kde – K Desktop Environment</p>
+<p>lxde – Lightweight X11 Desktop Environment</p>
+<p>xfce – XForms Common Environment</p>
+<h2 id="4、参数（声明：只是通常会使用的参数，并不一定是通用参数，使用时请注意）："><a href="#4、参数（声明：只是通常会使用的参数，并不一定是通用参数，使用时请注意）：" class="headerlink" title="4、参数（声明：只是通常会使用的参数，并不一定是通用参数，使用时请注意）："></a>4、参数（声明：只是通常会使用的参数，并不一定是通用参数，使用时请注意）：</h2><p>-h | –help：help</p>
+<p>-v | –version：version（吐槽一下java）</p>
+<h2 id="5、许可证："><a href="#5、许可证：" class="headerlink" title="5、许可证："></a>5、许可证：</h2><p>gnu gpl : Gnu General Public License</p>
+<p>gnu lgpl : Gnu General Lesser Public License</p>
+<p>gfdl : Gnu Free Documentation License</p>
+<p>agpl : Affero General Public License（或简写为Affero gpl)</p>
+<p>apsl : Apple Public Source License</p>
+<p>bsd : Berkeley Software Distribution license</p>
+<h2 id="CentOS-bin-bash-M-bad-interpreter解决方法"><a href="#CentOS-bin-bash-M-bad-interpreter解决方法" class="headerlink" title="CentOS /bin/bash^M: bad interpreter解决方法"></a>CentOS /bin/bash^M: bad interpreter解决方法</h2><ul>
+<li>如果这个脚本在Windows下编辑过，就有可能被转换成Windows下的dos文本格式了，这样的格式每一行的末尾都是以\r\n来标识，它的ASCII码分别是0x0D，0x0A。如果你将这个脚本文件直接放到Linux上执行就会报/bin/bash^M: bad interpreter错误提示</li>
+<li>查看是否是doc<ul>
+<li>:set ff </li>
+</ul>
+</li>
+<li>修改doc为unix<ul>
+<li>:set ff=unix</li>
+</ul>
+</li>
+</ul>
+<h2 id="top命令"><a href="#top命令" class="headerlink" title="top命令"></a>top命令</h2><h3 id="shift-h线程进程显示切换"><a href="#shift-h线程进程显示切换" class="headerlink" title="shift+h线程进程显示切换"></a>shift+h线程进程显示切换</h3><h3 id="摁1显示所有cpu"><a href="#摁1显示所有cpu" class="headerlink" title="摁1显示所有cpu"></a>摁1显示所有cpu</h3><ul>
+<li>或者执行  cat /proc/cpuinfo</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop110 ~]# cat /proc/cpuinfo </span><br><span class="line">processor	: 0</span><br><span class="line">vendor_id	: GenuineIntel</span><br><span class="line">cpu family	: 6</span><br><span class="line">model		: 158</span><br><span class="line">model name	: Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz</span><br><span class="line">stepping	: 10</span><br><span class="line">microcode	: 0xb4</span><br><span class="line">cpu MHz		: 2904.000</span><br><span class="line">cache size	: 9216 KB</span><br><span class="line">physical id	: 0</span><br><span class="line">siblings	: 2</span><br><span class="line">core id		: 0</span><br><span class="line">cpu cores	: 2</span><br><span class="line">apicid		: 0</span><br><span class="line">initial apicid	: 0</span><br><span class="line">fpu		: yes</span><br><span class="line">fpu_exception	: yes</span><br><span class="line">cpuid level	: 22</span><br><span class="line">wp		: yes</span><br><span class="line">flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon nopl xtopology tsc_reliable nonstop_tsc cpuid pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch cpuid_fault invpcid_single pti ssbd ibrs ibpb stibp fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid mpx rdseed adx smap clflushopt xsaveopt xsavec xsaves arat md_clear flush_l1d arch_capabilities</span><br><span class="line">bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit</span><br><span class="line">bogomips	: 5808.00</span><br><span class="line">clflush size	: 64</span><br><span class="line">cache_alignment	: 64</span><br><span class="line">address sizes	: 43 bits physical, 48 bits virtual</span><br><span class="line">power management:</span><br><span class="line"></span><br><span class="line">processor	: 1</span><br><span class="line">vendor_id	: GenuineIntel</span><br><span class="line">cpu family	: 6</span><br><span class="line">model		: 158</span><br><span class="line">model name	: Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz</span><br><span class="line">stepping	: 10</span><br><span class="line">microcode	: 0xb4</span><br><span class="line">cpu MHz		: 2904.000</span><br><span class="line">cache size	: 9216 KB</span><br><span class="line">physical id	: 0</span><br><span class="line">siblings	: 2</span><br><span class="line">core id		: 1</span><br><span class="line">cpu cores	: 2</span><br><span class="line">apicid		: 1</span><br><span class="line">initial apicid	: 1</span><br><span class="line">fpu		: yes</span><br><span class="line">fpu_exception	: yes</span><br><span class="line">cpuid level	: 22</span><br><span class="line">wp		: yes</span><br><span class="line">flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon nopl xtopology tsc_reliable nonstop_tsc cpuid pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch cpuid_fault invpcid_single pti ssbd ibrs ibpb stibp fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid mpx rdseed adx smap clflushopt xsaveopt xsavec xsaves arat md_clear flush_l1d arch_capabilities</span><br><span class="line">bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit</span><br><span class="line">bogomips	: 5808.00</span><br><span class="line">clflush size	: 64</span><br><span class="line">cache_alignment	: 64</span><br><span class="line">address sizes	: 43 bits physical, 48 bits virtual</span><br><span class="line">power management:</span><br><span class="line"></span><br><span class="line">processor	: 2</span><br><span class="line">vendor_id	: GenuineIntel</span><br><span class="line">cpu family	: 6</span><br><span class="line">model		: 158</span><br><span class="line">model name	: Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz</span><br><span class="line">stepping	: 10</span><br><span class="line">microcode	: 0xb4</span><br><span class="line">cpu MHz		: 2904.000</span><br><span class="line">cache size	: 9216 KB</span><br><span class="line">physical id	: 1</span><br><span class="line">siblings	: 2</span><br><span class="line">core id		: 0</span><br><span class="line">cpu cores	: 2</span><br><span class="line">apicid		: 2</span><br><span class="line">initial apicid	: 2</span><br><span class="line">fpu		: yes</span><br><span class="line">fpu_exception	: yes</span><br><span class="line">cpuid level	: 22</span><br><span class="line">wp		: yes</span><br><span class="line">flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon nopl xtopology tsc_reliable nonstop_tsc cpuid pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch cpuid_fault invpcid_single pti ssbd ibrs ibpb stibp fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid mpx rdseed adx smap clflushopt xsaveopt xsavec xsaves arat md_clear flush_l1d arch_capabilities</span><br><span class="line">bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit</span><br><span class="line">bogomips	: 5808.00</span><br><span class="line">clflush size	: 64</span><br><span class="line">cache_alignment	: 64</span><br><span class="line">address sizes	: 43 bits physical, 48 bits virtual</span><br><span class="line">power management:</span><br><span class="line"></span><br><span class="line">processor	: 3</span><br><span class="line">vendor_id	: GenuineIntel</span><br><span class="line">cpu family	: 6</span><br><span class="line">model		: 158</span><br><span class="line">model name	: Intel(R) Core(TM) i5-9400 CPU @ 2.90GHz</span><br><span class="line">stepping	: 10</span><br><span class="line">microcode	: 0xb4</span><br><span class="line">cpu MHz		: 2904.000</span><br><span class="line">cache size	: 9216 KB</span><br><span class="line">physical id	: 1</span><br><span class="line">siblings	: 2</span><br><span class="line">core id		: 1</span><br><span class="line">cpu cores	: 2</span><br><span class="line">apicid		: 3</span><br><span class="line">initial apicid	: 3</span><br><span class="line">fpu		: yes</span><br><span class="line">fpu_exception	: yes</span><br><span class="line">cpuid level	: 22</span><br><span class="line">wp		: yes</span><br><span class="line">flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon nopl xtopology tsc_reliable nonstop_tsc cpuid pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch cpuid_fault invpcid_single pti ssbd ibrs ibpb stibp fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid mpx rdseed adx smap clflushopt xsaveopt xsavec xsaves arat md_clear flush_l1d arch_capabilities</span><br><span class="line">bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit</span><br><span class="line">bogomips	: 5808.00</span><br><span class="line">clflush size	: 64</span><br><span class="line">cache_alignment	: 64</span><br><span class="line">address sizes	: 43 bits physical, 48 bits virtual</span><br><span class="line">power management:</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看processor 3 就是4核</li>
+</ul>
+<h3 id="解决cpu超高"><a href="#解决cpu超高" class="headerlink" title="解决cpu超高"></a>解决cpu超高</h3><ul>
+<li>找到线程号<ul>
+<li>top 查看</li>
+</ul>
+</li>
+<li>输出到文件或者控制台<ul>
+<li>jstack &gt; cpu.log</li>
+</ul>
+</li>
+<li>将线程转为16进制<ul>
+<li>printf “%x \n” + 进程号（PID）</li>
+</ul>
+</li>
+</ul>
+<h2 id="vmstat命令"><a href="#vmstat命令" class="headerlink" title="vmstat命令"></a>vmstat命令</h2><ul>
+<li><p>是Virtual Meomory Statistics（虚拟内存统计）的缩写，可对操作系统的虚拟内存、进程、CPU活动进行监控。是对系统的整体情况进行统计，不足之处是无法对某个进程进行深入分析。</p>
+</li>
+<li><p>每1秒显示一次</p>
+<ul>
+<li>vmstat 1</li>
+</ul>
+</li>
+</ul>
+<h2 id="free命令"><a href="#free命令" class="headerlink" title="free命令"></a>free命令</h2><ul>
+<li>free 命令显示系统内存的使用情况，包括物理内存、交换内存(swap)和内核缓冲区内存。</li>
+<li>free -g</li>
+<li>如果加上 -h 选项，输出的结果会友好很多：<ul>
+<li>free -h</li>
+</ul>
+</li>
+<li>有时我们需要持续的观察内存的状况，此时可以使用 -s 选项并指定间隔的秒数：<ul>
+<li>free -h -s 3</li>
+</ul>
+</li>
+</ul>
+<h2 id="iostat命令"><a href="#iostat命令" class="headerlink" title="iostat命令"></a>iostat命令</h2><h3 id="1-基本使用"><a href="#1-基本使用" class="headerlink" title="1. 基本使用"></a>1. 基本使用</h3><p>$iostat -d -k 1 10</p>
+<p>参数 -d 表示，显示设备（磁盘）使用状态；-k某些使用block为单位的列强制使用Kilobytes为单位；1 10表示，数据显示每隔1秒刷新一次，共显示10次。</p>
+<p>$iostat -d -k 1 10<br>Device:      tps  kB_read/s  kB_wrtn/s  kB_read  kB_wrtn<br>sda       39.29    21.14     1.44 441339807  29990031<br>sda1       0.00     0.00     0.00    1623    523<br>sda2       1.32     1.43     4.54  29834273  94827104<br>sda3       6.30     0.85    24.95  17816289 520725244<br>sda5       0.85     0.46     3.40  9543503  70970116<br>sda6       0.00     0.00     0.00    550    236<br>sda7       0.00     0.00     0.00    406     0<br>sda8       0.00     0.00     0.00    406     0<br>sda9       0.00     0.00     0.00    406     0<br>sda10      60.68    18.35    71.43 383002263 1490928140</p>
+<p>Device:      tps  kB_read/s  kB_wrtn/s  kB_read  kB_wrtn<br>sda       327.55   5159.18    102.04    5056    100<br>sda1       0.00     0.00     0.00     0     0</p>
+<p>tps：该设备每秒的传输次数（Indicate the number of transfers per second that were issued to the device.）。“一次传输”意思是“一次I/O请求”。多个逻辑请求可能会被合并为“一次I/O请求”。“一次传输”请求的大小是未知的。</p>
+<p>kB_read/s：每秒从设备（drive expressed）读取的数据量；kB_wrtn/s：每秒向设备（drive expressed）写入的数据量；kB_read：读取的总数据量；kB_wrtn：写入的总数量数据量；这些单位都为Kilobytes。</p>
+<p>上面的例子中，我们可以看到磁盘sda以及它的各个分区的统计数据，当时统计的磁盘总TPS是39.29，下面是各个分区的TPS。（因为是瞬间值，所以总TPS并不严格等于各个分区TPS的总和）</p>
+<h3 id="2-x-参数"><a href="#2-x-参数" class="headerlink" title="2. -x 参数"></a>2. -x 参数</h3><p>使用-x参数我们可以获得更多统计信息。</p>
+<p>iostat -d -x -k 1 10<br>Device:  rrqm/s wrqm/s  r/s  w/s rsec/s wsec/s  rkB/s  wkB/s avgrq-sz avgqu-sz  await svctm %util<br>sda     1.56 28.31 7.80 31.49  42.51  2.92  21.26   1.46   1.16   0.03  0.79  2.62 10.28<br>Device:  rrqm/s wrqm/s  r/s  w/s rsec/s wsec/s  rkB/s  wkB/s avgrq-sz avgqu-sz  await svctm %util<br>sda     2.00 20.00 381.00 7.00 12320.00 216.00 6160.00  108.00  32.31   1.75  4.50  2.17 84.20</p>
+<p>rrqm/s:     每秒进行 merge 的读操作数目。即 delta(rmerge)/s<br>wrqm/s:     每秒进行 merge 的写操作数目。即 delta(wmerge)/s<br>r/s:      每秒完成的读 I/O 设备次数。即 delta(rio)/s<br>w/s:      每秒完成的写 I/O 设备次数。即 delta(wio)/s<br>rsec/s:     每秒读扇区数。即 delta(rsect)/s<br>wsec/s:     每秒写扇区数。即 delta(wsect)/s<br>rkB/s:     每秒读K字节数。是 rsect/s 的一半，因为每扇区大小为512字节。(需要计算)<br>wkB/s:     每秒写K字节数。是 wsect/s 的一半。(需要计算)<br>avgrq-sz:    平均每次设备I/O操作的数据大小 (扇区)。delta(rsect+wsect)/delta(rio+wio)<br>avgqu-sz:    平均I/O队列长度。即 delta(aveq)/s/1000 (因为aveq的单位为毫秒)。<br>await:     平均每次设备I/O操作的等待时间 (毫秒)。即 delta(ruse+wuse)/delta(rio+wio)<br>svctm:     平均每次设备I/O操作的服务时间 (毫秒)。即 delta(use)/delta(rio+wio)<br>%util:     一秒中有百分之多少的时间用于 I/O 操作，或者说一秒中有多少时间 I/O 队列是非空的。即 delta(use)/s/1000 (因为use的单位为毫秒)</p>
+<p>如果 %util 接近 100%，说明产生的I/O请求太多，I/O系统已经满负荷，该磁盘可能存在瓶颈。</p>
+<p>idle小于70% IO压力就较大了,一般读取速度有较多的wait。</p>
+<p>同时可以结合vmstat 查看查看b参数(等待资源的进程数)和wa参数(IO等待所占用的CPU时间的百分比,高过30%时IO压力高)</p>
+<p>另外 await 的参数也要多和 svctm 来参考。差的过高就一定有 IO 的问题。</p>
+<p>avgqu-sz 也是个做 IO 调优时需要注意的地方，这个就是直接每次操作的数据的大小，如果次数多，但数据拿的小的话，其实 IO 也会很小.如果数据拿的大，才IO 的数据会高。也可以通过 avgqu-sz × ( r/s or w/s ) = rsec/s or wsec/s.也就是讲，读定速度是这个来决定的。</p>
+<p>另外还可以参考</p>
+<p>svctm 一般要小于 await (因为同时等待的请求的等待时间被重复计算了)，svctm 的大小一般和磁盘性能有关，CPU/内存的负荷也会对其有影响，请求过多也会间接导致 svctm 的增加。await 的大小一般取决于服务时间(svctm) 以及 I/O 队列的长度和 I/O 请求的发出模式。如果 svctm 比较接近 await，说明 I/O 几乎没有等待时间；如果 await 远大于 svctm，说明 I/O 队列太长，应用得到的响应时间变慢，如果响应时间超过了用户可以容许的范围，这时可以考虑更换更快的磁盘，调整内核 elevator <a target="_blank" rel="noopener" href="http://lib.csdn.net/base/datastructure">算法</a>，优化应用，或者升级 CPU。</p>
+<p>队列长度(avgqu-sz)也可作为衡量系统 I/O 负荷的指标，但由于 avgqu-sz 是按照单位时间的平均值，所以不能反映瞬间的 I/O 洪水。</p>
+<p>别人一个不错的例子(I/O 系统 vs. 超市排队)</p>
+<p>举一个例子，我们在超市排队 checkout 时，怎么决定该去哪个交款台呢? 首当是看排的队人数，5个人总比20人要快吧? 除了数人头，我们也常常看看前面人购买的东西多少，如果前面有个采购了一星期食品的大妈，那么可以考虑换个队排了。还有就是收银员的速度了，如果碰上了连钱都点不清楚的新手，那就有的等了。另外，时机也很重要，可能 5 分钟前还人满为患的收款台，现在已是人去楼空，这时候交款可是很爽啊，当然，前提是那过去的 5 分钟里所做的事情比排队要有意义 (不过我还没发现什么事情比排队还无聊的)。</p>
+<p>I/O 系统也和超市排队有很多类似之处:</p>
+<p>r/s+w/s 类似于交款人的总数</p>
+<p>平均队列长度(avgqu-sz)类似于单位时间里平均排队人的个数</p>
+<p>平均服务时间(svctm)类似于收银员的收款速度</p>
+<p>平均等待时间(await)类似于平均每人的等待时间</p>
+<p>平均I/O数据(avgrq-sz)类似于平均每人所买的东西多少</p>
+<p>I/O 操作率 (%util)类似于收款台前有人排队的时间比例。</p>
+<p>我们可以根据这些数据分析出 I/O 请求的模式，以及 I/O 的速度和响应时间。</p>
+<h3 id="3-c-参数"><a href="#3-c-参数" class="headerlink" title="3. -c 参数"></a>3. -c 参数</h3><p>iostat还可以用来获取cpu部分状态值：</p>
+<p>iostat -c 1 10<br>avg-cpu: %user  %nice  %sys %iowait  %idle<br>      1.98  0.00  0.35  11.45  86.22<br>avg-cpu: %user  %nice  %sys %iowait  %idle<br>      1.62  0.00  0.25  34.46  63.67</p>
+<h3 id="4-常见用法"><a href="#4-常见用法" class="headerlink" title="4. 常见用法"></a>4. 常见用法</h3><p>$iostat -d -k 1 10    #查看TPS和吞吐量信息<br>iostat -d -x -k 1 10   #查看设备使用率（%util）、响应时间（await）<br>iostat -c 1 10      #查看cpu状态</p>
+<h3 id="5-实例分析"><a href="#5-实例分析" class="headerlink" title="5. 实例分析"></a>5. 实例分析</h3><p>$$iostat -d -k 1 |grep sda10<br>Device:      tps  kB_read/s  kB_wrtn/s  kB_read  kB_wrtn<br>sda10      60.72    18.95    71.53 395637647 1493241908<br>sda10      299.02   4266.67    129.41    4352    132<br>sda10      483.84   4589.90   4117.17    4544    4076<br>sda10      218.00   3360.00    100.00    3360    100<br>sda10      546.00   8784.00    124.00    8784    124<br>sda10      827.00   13232.00    136.00   13232    136</p>
+<p>上面看到，磁盘每秒传输次数平均约400；每秒磁盘读取约5MB，写入约1MB。</p>
+<p>iostat -dxk 1<br>Device:  rrqm/s wrqm/s  r/s  w/s rsec/s wsec/s  rkB/s  wkB/s avgrq-sz avgqu-sz  await svctm %util<br>sda     1.56 28.31 7.84 31.50  43.65  3.16  21.82   1.58   1.19   0.03  0.80  2.61 10.29<br>sda     1.98 24.75 419.80 6.93 13465.35 253.47 6732.67  126.73  32.15   2.00  4.70  2.00 85.25<br>sda     3.06 41.84 444.90 54.08 14204.08 2048.98 7102.04 1024.49  32.57   2.10  4.21  1.85 92.24</p>
+<p>可以看到磁盘的平均响应时间(也就是await)&lt;5ms，磁盘使用率(也就是util)&gt;80。磁盘响应正常，但是已经很繁忙了。</p>
+<ul>
+<li><p>iostat是I/O statistics（输入/输出统计）的缩写，iostat工具将对系统的磁盘操作活动进行监视。它的特点是汇报磁盘活动统计情况，同时也会汇报出CPU使用情况。iostat也有一个弱点，就是它不能对某个进程进行深入分析，仅对系统的整体情况进行分析</p>
+</li>
+<li><p>iostat 1</p>
+</li>
+<li><p>每隔2秒刷新显示，且显示3次</p>
+<ul>
+<li>iostat 2 3</li>
+</ul>
+</li>
+<li><p>显示指定磁盘信息</p>
+<ul>
+<li>iostat -d ``/dev/sda</li>
+</ul>
+</li>
+<li><p>显示tty和Cpu信息</p>
+<ul>
+<li>iostat -t</li>
+</ul>
+</li>
+<li><p>以M为单位显示所有信息</p>
+<ul>
+<li>iostat -m</li>
+</ul>
+</li>
+<li><p>查看设备使用率（%util）、响应时间（await）</p>
+<ul>
+<li><pre><code># 【-d 显示磁盘使用情况，-x 显示详细信息】
+# d: detail
+iostat -d -x -k 1 1
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>iostat -xd 1</p>
+</li>
+</ul>
+<h2 id="nicstat-需要安装"><a href="#nicstat-需要安装" class="headerlink" title="nicstat 需要安装"></a>nicstat 需要安装</h2><h2 id="jmeter"><a href="#jmeter" class="headerlink" title="jmeter"></a>jmeter</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li><p>Apache JMeter是Apache组织开发的基于Java的压力测试工具。用于对软件做压力测试，它最初被设计用于Web应用测试，但后来扩展到其他测试领域。 它可以用于测试静态和动态资源，例如静态文件、Java <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B0%8F%E6%9C%8D%E5%8A%A1%E7%A8%8B%E5%BA%8F/4148836">小服务程序</a>、CGI 脚本、Java 对象、数据库、FTP 服务器， 等等。JMeter 可以用于对服务器、网络或对象模拟巨大的负载，来自不同压力类别下测试它们的强度和分析整体性能。另外，JMeter能够对应用程序做功能/<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9B%9E%E5%BD%92%E6%B5%8B%E8%AF%95/1925732">回归测试</a>，通过创建带有断言的脚本来验证你的程序返回了你期望的结果。为了最大限度的灵活性，JMeter允许<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/6555484">使用正则表达式</a>创建断言。</p>
+<p>Apache jmeter 可以用于对静态的和动态的资源（文件，Servlet，Perl脚本，java 对象，数据库和查询，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/FTP%E6%9C%8D%E5%8A%A1%E5%99%A8">FTP服务器</a>等等）的性能进行测试。它可以用于对服务器、网络或对象模拟繁重的负载来测试它们的强度或分析不同压力类型下的整体性能。你可以使用它做性能的图形分析或在大并发<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B4%9F%E8%BD%BD%E6%B5%8B%E8%AF%95/10921210">负载测试</a>你的服务器/脚本/对象。</p>
+</li>
+</ul>
+<h1 id="运维监控工具"><a href="#运维监控工具" class="headerlink" title="运维监控工具"></a>运维监控工具</h1><h2 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h2><h2 id="Prometheus"><a href="#Prometheus" class="headerlink" title="Prometheus"></a>Prometheus</h2><h2 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h2><h2 id="zipkin"><a href="#zipkin" class="headerlink" title="zipkin"></a>zipkin</h2><h2 id="spring-cloud全家桶"><a href="#spring-cloud全家桶" class="headerlink" title="spring cloud全家桶"></a>spring cloud全家桶</h2><h1 id="运维测试工具"><a href="#运维测试工具" class="headerlink" title="运维测试工具"></a>运维测试工具</h1><h2 id="jmeter-1"><a href="#jmeter-1" class="headerlink" title="jmeter"></a>jmeter</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Mr.Cui</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/10/19/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">http://example.com/2021/10/19/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Mr.Cui的Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/10/19/JVM%E4%B8%8B%E7%AF%87%EF%BC%9A%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E4%B8%8E%E8%B0%83%E4%BC%98%E7%AF%87%20git%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">git帮助文档</div></div></a></div><div class="next-post pull-right"><a href="/2021/10/19/hello-world/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hello World</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/algolia.svg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Mr.Cui</div><div class="author-info__description">This man is very lazy, he left nothing</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">Linux常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#lsattr%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.</span> <span class="toc-text">lsattr命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">1.1.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chattr%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.</span> <span class="toc-text">chattr命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-number">1.2.2.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B-1"><span class="toc-number">1.2.3.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85ifconfig"><span class="toc-number">1.3.</span> <span class="toc-text">安装ifconfig</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linux%E4%B8%80%E8%A1%8C%E5%91%BD%E4%BB%A4%E6%9F%A5%E6%89%BE%E8%BF%9B%E7%A8%8B%E5%B9%B6%E6%9D%80%E6%8E%89%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">linux一行命令查找进程并杀掉进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%85%AC%E7%BD%91ip"><span class="toc-number">1.5.</span> <span class="toc-text">查询公网ip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E5%92%8C%E7%BE%A4%E7%BB%84"><span class="toc-number">1.6.</span> <span class="toc-text">添加用户和群组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E7%BE%A4%E7%BB%84"><span class="toc-number">1.7.</span> <span class="toc-text">修改用户群组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E7%BB%84"><span class="toc-number">1.7.1.</span> <span class="toc-text">查看用户组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E7%BB%84"><span class="toc-number">1.7.2.</span> <span class="toc-text">修改用户组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%A9%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E8%8E%B7%E5%BE%97ROOT%E6%9D%83%E9%99%90"><span class="toc-number">1.8.</span> <span class="toc-text">如何让普通用户获得ROOT权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linux%E6%9F%A5%E7%9C%8B%E5%8E%86%E5%8F%B2%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B9%B6%E4%B8%94%E6%98%BE%E7%A4%BA%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4"><span class="toc-number">1.9.</span> <span class="toc-text">linux查看历史操作记录并且显示执行时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-%E5%9B%BA%E5%AE%9Aip-ifcfg-em1-%E6%98%AF%E7%BD%91%E5%8D%A1%E5%90%8D"><span class="toc-number">1.10.</span> <span class="toc-text">修改&#x2F;固定ip  ifcfg-em1  是网卡名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9hostname"><span class="toc-number">1.11.</span> <span class="toc-text">修改hostname</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E6%B2%A1%E6%9C%89ifconfig%E5%91%BD%E4%BB%A4"><span class="toc-number">1.11.1.</span> <span class="toc-text">如果没有ifconfig命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%B4%E6%97%B6%E4%BF%AE%E6%94%B9%E8%AF%AD%E8%A8%80%E4%B8%BA%E4%B8%AD%E6%96%87"><span class="toc-number">1.12.</span> <span class="toc-text">临时修改语言为中文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%EF%BC%88%E7%B1%BB%E6%98%AF%E5%BF%AB%E6%8D%B7%E9%94%AE%EF%BC%89"><span class="toc-number">1.13.</span> <span class="toc-text">修改当前用户启动脚本（类是快捷键）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8"><span class="toc-number">1.14.</span> <span class="toc-text">查看端口被占用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%BB%E9%99%A4%E6%B3%A8%E9%87%8A%E6%9F%A5%E7%9C%8B"><span class="toc-number">1.15.</span> <span class="toc-text">去除注释查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-number">1.16.</span> <span class="toc-text">网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E7%BD%91%E5%8D%A1-%E7%BD%91%E7%BB%9C%E6%96%B9%E6%B3%95"><span class="toc-number">1.16.1.</span> <span class="toc-text">重启网卡&#x2F;网络方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sync-%E8%BF%9C%E7%A8%8B%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7"><span class="toc-number">1.17.</span> <span class="toc-text">sync 远程同步工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">1.17.1.</span> <span class="toc-text">基本语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E9%A1%B9%E8%AF%B4%E6%98%8E%E5%92%8C%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.17.2.</span> <span class="toc-text">选项说明和示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E9%92%A5"><span class="toc-number">1.18.</span> <span class="toc-text">密钥</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9-ssh%E6%96%87%E4%BB%B6%E5%A4%B9%E6%8C%81%E6%9C%89%E4%BA%BA"><span class="toc-number">1.18.1.</span> <span class="toc-text">更改.ssh文件夹持有人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9-ssh%E6%96%87%E4%BB%B6%E5%A4%B9%E6%9D%83%E9%99%90"><span class="toc-number">1.18.2.</span> <span class="toc-text">更改.ssh文件夹权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5"><span class="toc-number">1.18.3.</span> <span class="toc-text">生成密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9%E6%8C%81%E6%9C%89%E4%BA%BA"><span class="toc-number">1.18.4.</span> <span class="toc-text">更改持有人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9%E6%9D%83%E9%99%90"><span class="toc-number">1.18.5.</span> <span class="toc-text">更改权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%B7%E8%B4%9D%E5%AF%86%E9%92%A5"><span class="toc-number">1.18.6.</span> <span class="toc-text">拷贝密钥</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH%E7%99%BB%E5%BD%95"><span class="toc-number">1.19.</span> <span class="toc-text">SSH登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9DNS"><span class="toc-number">1.20.</span> <span class="toc-text">修改DNS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%8C%82%E8%BD%BD%E7%82%B9"><span class="toc-number">1.21.</span> <span class="toc-text">修改挂载点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B"><span class="toc-number">1.21.1.</span> <span class="toc-text">查看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%88%E6%8C%82%E8%BD%BD%E4%BD%8D%E7%BD%AE%EF%BC%89"><span class="toc-number">1.21.2.</span> <span class="toc-text">创建文件夹（挂载位置）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD%E4%B9%8B%E5%89%8D%E7%9A%84%E6%8C%82%E8%BD%BD%E7%82%B9"><span class="toc-number">1.21.3.</span> <span class="toc-text">卸载之前的挂载点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.21.4.</span> <span class="toc-text">修改配置文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E7%9B%B8%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text">防火墙相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#firewalld%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">2.1.</span> <span class="toc-text">firewalld防火墙</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%B7%B2%E7%BB%8F%E5%BC%80%E6%94%BE%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.1.1.</span> <span class="toc-text">查看已经开放的端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E6%89%93%E5%BC%80%E7%9A%84%E7%AB%AF%E5%8F%A3%EF%BC%9A"><span class="toc-number">2.1.2.</span> <span class="toc-text">查看所有打开的端口：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E6%8C%87%E5%AE%9A%E7%AB%AF%E5%8F%A3%EF%BC%8C%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3%E5%90%8E%E8%A6%81%E9%87%8D%E5%90%AF%E9%98%B2%E7%81%AB%E5%A2%99%E6%89%8D%E8%83%BD%E7%94%9F%E6%95%88"><span class="toc-number">2.1.3.</span> <span class="toc-text">开启指定端口，开放端口后要重启防火墙才能生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E6%8C%87%E5%AE%9A%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.1.4.</span> <span class="toc-text">关闭指定端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AF-%E5%85%B3%E9%97%AD-%E9%87%8D%E5%90%AF%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">2.1.5.</span> <span class="toc-text">开启&#x2F;关闭&#x2F;重启防火墙</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iptables%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">2.2.</span> <span class="toc-text">iptables防火墙</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%BE%93%E5%85%A5%E5%9C%B0%E5%9D%80%E5%92%8C%E7%AB%AF%E5%8F%A3%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF"><span class="toc-number">2.2.1.</span> <span class="toc-text">通过命令输入地址和端口详细信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CentOS-8%E4%BD%BF%E7%94%A8iptables"><span class="toc-number">2.3.</span> <span class="toc-text">CentOS 8使用iptables</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E7%8A%B6%E6%80%81"><span class="toc-number">2.3.1.</span> <span class="toc-text">查看端口状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E3%80%81%E5%85%B3%E9%97%AD%E3%80%81%E9%87%8D%E5%90%AF%E3%80%81%E6%9F%A5%E7%9C%8B%E7%8A%B6%E6%80%81"><span class="toc-number">2.3.2.</span> <span class="toc-text">开启、关闭、重启、查看状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E6%8C%87%E5%AE%9A%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.3.3.</span> <span class="toc-text">开放指定端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS6-%E5%BC%80%E6%94%BE%E6%8C%87%E5%AE%9A%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.3.4.</span> <span class="toc-text">CentOS6 开放指定端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E9%98%B2%E7%81%AB%E5%A2%99%E8%BD%AC%E5%8F%91%E8%A7%84%E5%88%99"><span class="toc-number">2.3.5.</span> <span class="toc-text">添加防火墙转发规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E9%98%B2%E7%81%AB%E5%A2%99%E8%BD%AC%E5%8F%91%E8%A7%84%E5%88%99"><span class="toc-number">2.3.6.</span> <span class="toc-text">删除防火墙转发规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E9%98%B2%E7%81%AB%E5%A2%99%E8%BD%AC%E5%8F%91%E8%A7%84%E5%88%99-1"><span class="toc-number">2.3.7.</span> <span class="toc-text">添加防火墙转发规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E9%98%B2%E7%81%AB%E5%A2%99%E8%BD%AC%E5%8F%91%E8%A7%84%E5%88%99-1"><span class="toc-number">2.3.8.</span> <span class="toc-text">删除防火墙转发规则</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8BLinux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%84%E7%A7%8D%E5%8F%82%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">查看Linux服务器各种参数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8BCPU"><span class="toc-number">3.1.</span> <span class="toc-text">查看CPU</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%89%A9%E7%90%86cpu%E4%B8%AA%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">查看物理cpu个数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%A0%B8%E5%BF%83%E6%95%B0%E9%87%8F"><span class="toc-number">3.3.</span> <span class="toc-text">查看核心数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%BA%BF%E7%A8%8B%E6%95%B0"><span class="toc-number">3.4.</span> <span class="toc-text">查看线程数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AAcpu%E6%98%AF%E5%87%A0%E6%A0%B8%EF%BC%88%E5%81%87%E8%AE%BEcpu%E9%85%8D%E7%BD%AE%E7%9B%B8%E5%90%8C%EF%BC%89"><span class="toc-number">3.4.1.</span> <span class="toc-text">每个cpu是几核（假设cpu配置相同）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%89%A9%E7%90%86CPU%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="toc-number">3.4.2.</span> <span class="toc-text">查看物理CPU的个数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AA%E7%89%A9%E7%90%86CPU%E4%B8%ADCore%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="toc-number">3.4.3.</span> <span class="toc-text">每个物理CPU中Core的个数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AA%E7%89%A9%E7%90%86CPU%E4%B8%AD%E9%80%BB%E8%BE%91CPU-%E5%8F%AF%E8%83%BD%E6%98%AFcore-threads%E6%88%96both-%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="toc-number">3.4.4.</span> <span class="toc-text">每个物理CPU中逻辑CPU(可能是core, threads或both)的个数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E9%80%BB%E8%BE%91CPU%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="toc-number">3.4.5.</span> <span class="toc-text">查看逻辑CPU的个数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8BCPU%E6%98%AF%E5%87%A0%E6%A0%B8"><span class="toc-number">3.4.6.</span> <span class="toc-text">查看CPU是几核</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8BCPU%E7%9A%84%E4%B8%BB%E9%A2%91"><span class="toc-number">3.4.7.</span> <span class="toc-text">查看CPU的主频</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bcpu%E5%85%B7%E4%BD%93%E5%9E%8B%E5%8F%B7"><span class="toc-number">3.4.8.</span> <span class="toc-text">查看cpu具体型号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD"><span class="toc-number">3.5.</span> <span class="toc-text">卸载</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E9%85%8D%E7%BD%AE%E5%90%84%E7%A7%8D%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">Linux配置各种环境变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-etc-profile%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">修改&#x2F;etc&#x2F;profile文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%AE%8C%E6%88%90%E5%90%8E%E4%BD%BF%E5%85%B6%E7%94%9F%E6%95%88"><span class="toc-number">4.2.</span> <span class="toc-text">修改完成后使其生效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E5%AF%B9%E5%BA%94%E8%B7%AF%E5%BE%84%E5%B0%B1%E5%8F%AF%E4%BB%A5"><span class="toc-number">4.3.</span> <span class="toc-text">注意对应路径就可以</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">4.4.</span> <span class="toc-text">Java环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scala%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">4.5.</span> <span class="toc-text">Scala环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">4.6.</span> <span class="toc-text">Spark环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hadoop%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">4.7.</span> <span class="toc-text">Hadoop环境变量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-%E5%91%BD%E4%BB%A4%E7%9B%AE%E5%BD%95-%E5%90%8D%E7%A7%B0-%E8%8B%B1%E6%96%87%E5%8D%95%E8%AF%8D-%E7%BC%A9%E5%86%99-%E5%8A%A9%E8%AE%B0"><span class="toc-number">5.</span> <span class="toc-text">Linux 命令目录 名称 英文单词 缩写 助记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0%E3%80%81%E9%A1%B9%E7%9B%AE%E5%90%8D%EF%BC%9A"><span class="toc-number">5.1.</span> <span class="toc-text">0、项目名：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E7%9B%AE%E5%BD%95%E5%90%8D%EF%BC%9A"><span class="toc-number">5.2.</span> <span class="toc-text">1、目录名：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="toc-number">5.3.</span> <span class="toc-text">2、常用命令：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2%E3%80%81%E7%A1%AC%E4%BB%B6%E7%AE%A1%E7%90%86%EF%BC%9A"><span class="toc-number">5.3.1.</span> <span class="toc-text">2.2、硬件管理：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1%E3%80%81lvm"><span class="toc-number">5.3.1.1.</span> <span class="toc-text">2.2.1、lvm</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3%E3%80%81%E8%BD%AF%E4%BB%B6%E5%8F%8A%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%EF%BC%9A"><span class="toc-number">5.3.2.</span> <span class="toc-text">2.3、软件及软件包管理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4%E3%80%81%E7%94%A8%E6%88%B7%E5%8F%8A%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86%EF%BC%9A"><span class="toc-number">5.3.3.</span> <span class="toc-text">2.4、用户及用户组管理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5%E3%80%81%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%EF%BC%9A"><span class="toc-number">5.3.4.</span> <span class="toc-text">2.5、系统管理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6%E3%80%81%E7%BC%96%E8%BE%91%E5%99%A8%EF%BC%9A"><span class="toc-number">5.3.5.</span> <span class="toc-text">2.6、编辑器：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7%E3%80%81%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%9A"><span class="toc-number">5.3.6.</span> <span class="toc-text">2.7、编译器：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%EF%BC%9A"><span class="toc-number">5.4.</span> <span class="toc-text">3、图形界面：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E5%8F%82%E6%95%B0%EF%BC%88%E5%A3%B0%E6%98%8E%EF%BC%9A%E5%8F%AA%E6%98%AF%E9%80%9A%E5%B8%B8%E4%BC%9A%E4%BD%BF%E7%94%A8%E7%9A%84%E5%8F%82%E6%95%B0%EF%BC%8C%E5%B9%B6%E4%B8%8D%E4%B8%80%E5%AE%9A%E6%98%AF%E9%80%9A%E7%94%A8%E5%8F%82%E6%95%B0%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%97%B6%E8%AF%B7%E6%B3%A8%E6%84%8F%EF%BC%89%EF%BC%9A"><span class="toc-number">5.5.</span> <span class="toc-text">4、参数（声明：只是通常会使用的参数，并不一定是通用参数，使用时请注意）：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E8%AE%B8%E5%8F%AF%E8%AF%81%EF%BC%9A"><span class="toc-number">5.6.</span> <span class="toc-text">5、许可证：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CentOS-bin-bash-M-bad-interpreter%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">5.7.</span> <span class="toc-text">CentOS &#x2F;bin&#x2F;bash^M: bad interpreter解决方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#top%E5%91%BD%E4%BB%A4"><span class="toc-number">5.8.</span> <span class="toc-text">top命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#shift-h%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E6%98%BE%E7%A4%BA%E5%88%87%E6%8D%A2"><span class="toc-number">5.8.1.</span> <span class="toc-text">shift+h线程进程显示切换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%91%811%E6%98%BE%E7%A4%BA%E6%89%80%E6%9C%89cpu"><span class="toc-number">5.8.2.</span> <span class="toc-text">摁1显示所有cpu</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3cpu%E8%B6%85%E9%AB%98"><span class="toc-number">5.8.3.</span> <span class="toc-text">解决cpu超高</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vmstat%E5%91%BD%E4%BB%A4"><span class="toc-number">5.9.</span> <span class="toc-text">vmstat命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#free%E5%91%BD%E4%BB%A4"><span class="toc-number">5.10.</span> <span class="toc-text">free命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iostat%E5%91%BD%E4%BB%A4"><span class="toc-number">5.11.</span> <span class="toc-text">iostat命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">5.11.1.</span> <span class="toc-text">1. 基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-x-%E5%8F%82%E6%95%B0"><span class="toc-number">5.11.2.</span> <span class="toc-text">2. -x 参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-c-%E5%8F%82%E6%95%B0"><span class="toc-number">5.11.3.</span> <span class="toc-text">3. -c 参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95"><span class="toc-number">5.11.4.</span> <span class="toc-text">4. 常见用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90"><span class="toc-number">5.11.5.</span> <span class="toc-text">5. 实例分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nicstat-%E9%9C%80%E8%A6%81%E5%AE%89%E8%A3%85"><span class="toc-number">5.12.</span> <span class="toc-text">nicstat 需要安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jmeter"><span class="toc-number">5.13.</span> <span class="toc-text">jmeter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">5.13.1.</span> <span class="toc-text">简介</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E7%BB%B4%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7"><span class="toc-number">6.</span> <span class="toc-text">运维监控工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#zabbix"><span class="toc-number">6.1.</span> <span class="toc-text">zabbix</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prometheus"><span class="toc-number">6.2.</span> <span class="toc-text">Prometheus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cat"><span class="toc-number">6.3.</span> <span class="toc-text">cat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zipkin"><span class="toc-number">6.4.</span> <span class="toc-text">zipkin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-cloud%E5%85%A8%E5%AE%B6%E6%A1%B6"><span class="toc-number">6.5.</span> <span class="toc-text">spring cloud全家桶</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E7%BB%B4%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-number">7.</span> <span class="toc-text">运维测试工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#jmeter-1"><span class="toc-number">7.1.</span> <span class="toc-text">jmeter</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/02/28/Spring%E8%87%AA%E5%B8%A6%E7%9A%84%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="Spring自带的工具类"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring自带的工具类"/></a><div class="content"><a class="title" href="/2022/02/28/Spring%E8%87%AA%E5%B8%A6%E7%9A%84%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="Spring自带的工具类">Spring自带的工具类</a><time datetime="2022-02-28T13:30:59.000Z" title="发表于 2022-02-28 21:30:59">2022-02-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/09/Hexo%20%E5%8D%87%E7%BA%A7%E6%95%99%E7%A8%8B/" title="Hexo 升级教程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo 升级教程"/></a><div class="content"><a class="title" href="/2022/01/09/Hexo%20%E5%8D%87%E7%BA%A7%E6%95%99%E7%A8%8B/" title="Hexo 升级教程">Hexo 升级教程</a><time datetime="2022-01-08T16:58:59.000Z" title="发表于 2022-01-09 00:58:59">2022-01-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/09/JVM%E4%B8%8A%E7%AF%87%EF%BC%9A%E5%86%85%E5%AD%98%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AF%87%2001-JVM%E4%B8%8EJava%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" title="JVM上篇：内存与垃圾回收篇 01-JVM与Java体系结构"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JVM上篇：内存与垃圾回收篇 01-JVM与Java体系结构"/></a><div class="content"><a class="title" href="/2022/01/09/JVM%E4%B8%8A%E7%AF%87%EF%BC%9A%E5%86%85%E5%AD%98%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AF%87%2001-JVM%E4%B8%8EJava%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" title="JVM上篇：内存与垃圾回收篇 01-JVM与Java体系结构">JVM上篇：内存与垃圾回收篇 01-JVM与Java体系结构</a><time datetime="2022-01-08T16:58:59.000Z" title="发表于 2022-01-09 00:58:59">2022-01-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/09/JVM%E4%B8%8A%E7%AF%87%EF%BC%9A%E5%86%85%E5%AD%98%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AF%87%2002-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="JVM上篇：内存与垃圾回收篇 02-类加载子系统"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JVM上篇：内存与垃圾回收篇 02-类加载子系统"/></a><div class="content"><a class="title" href="/2022/01/09/JVM%E4%B8%8A%E7%AF%87%EF%BC%9A%E5%86%85%E5%AD%98%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AF%87%2002-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="JVM上篇：内存与垃圾回收篇 02-类加载子系统">JVM上篇：内存与垃圾回收篇 02-类加载子系统</a><time datetime="2022-01-08T16:58:59.000Z" title="发表于 2022-01-09 00:58:59">2022-01-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/09/JVM%E4%B8%8A%E7%AF%87%EF%BC%9A%E5%86%85%E5%AD%98%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AF%87%2003-%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%8F%8A%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8/" title="JVM上篇：内存与垃圾回收篇 03-运行时数据区及程序计数器"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JVM上篇：内存与垃圾回收篇 03-运行时数据区及程序计数器"/></a><div class="content"><a class="title" href="/2022/01/09/JVM%E4%B8%8A%E7%AF%87%EF%BC%9A%E5%86%85%E5%AD%98%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AF%87%2003-%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%8F%8A%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8/" title="JVM上篇：内存与垃圾回收篇 03-运行时数据区及程序计数器">JVM上篇：内存与垃圾回收篇 03-运行时数据区及程序计数器</a><time datetime="2022-01-08T16:58:59.000Z" title="发表于 2022-01-09 00:58:59">2022-01-09</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Mr.Cui</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
